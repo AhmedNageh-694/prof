@@ -1,0 +1,21 @@
+{
+  "@@locale": "ar",
+  "appTitle": "التطبيق الاحترافي",
+  "login": "تسجيل الدخول",
+  "signup": "إنشاء حساب",
+  "email": "البريد الإلكتروني",
+  "password": "كلمة المرور",
+  "confirmPassword": "تأكيد كلمة المرور",
+  "emptyFieldError": "لا يمكن أن يكون هذا الحقل فارغاً",
+  "invalidEmailError": "الرجاء إدخال بريد إلكتروني صحيح",
+  "weakPasswordError": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
+  "passwordMismatchError": "كلمات المرور غير متطابقة",
+  "submit": "إرسال",
+  "dontHaveAccount": "ليس لديك حساب؟",
+  "alreadyHaveAccount": "لديك حساب بالفعل؟",
+  "successLogin": "تم تسجيل الدخول بنجاح!",
+  "successSignup": "تم إنشاء الحساب بنجاح!",
+  "changeLanguage": "تغيير اللغة",
+  "loginToContinue": "قم بتسجيل الدخول للمتابعة",
+  "createAnAccount": "إنشاء حساب جديد"
+}

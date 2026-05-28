@@ -1,0 +1,21 @@
+{
+  "@@locale": "en",
+  "appTitle": "Professional App",
+  "login": "Login",
+  "signup": "Sign Up",
+  "email": "Email",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "emptyFieldError": "This field cannot be empty",
+  "invalidEmailError": "Please enter a valid email",
+  "weakPasswordError": "Password must be at least 6 characters",
+  "passwordMismatchError": "Passwords do not match",
+  "submit": "Submit",
+  "dontHaveAccount": "Don't have an account?",
+  "alreadyHaveAccount": "Already have an account?",
+  "successLogin": "Successfully logged in!",
+  "successSignup": "Successfully signed up!",
+  "changeLanguage": "Change Language",
+  "loginToContinue": "Login to continue",
+  "createAnAccount": "Create an account"
+}
