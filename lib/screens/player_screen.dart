@@ -2,8 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/related_content.dart';
-import '../theme/app_theme.dart';
+import '../core/constants/app_colors.dart';
 import '../widgets/related_card.dart';
+import '../localization/app_localizations.dart';
 
 const _related = [
   RelatedContent(
@@ -110,6 +111,7 @@ class _PlayerScreenState extends State<PlayerScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final topPad = MediaQuery.of(context).padding.top;
 
     return Scaffold(
@@ -129,7 +131,7 @@ class _PlayerScreenState extends State<PlayerScreen>
                   _iconBtn(Icons.chevron_left, () {}),
                   const Spacer(),
                   Text(
-                    'Now Playing',
+                    l10n.nowPlaying,
                     style: GoogleFonts.inter(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -138,9 +140,13 @@ class _PlayerScreenState extends State<PlayerScreen>
                   ),
                   const Spacer(),
                   _iconBtn(
-                    Icons.bookmark_outline,
+                    _bookmarked
+                        ? Icons.bookmark_rounded
+                        : Icons.bookmark_outline,
                     () => setState(() => _bookmarked = !_bookmarked),
-                    color: _bookmarked ? AppColors.primary : AppColors.foreground,
+                    color: _bookmarked
+                        ? AppColors.primary
+                        : AppColors.foreground,
                   ),
                 ],
               ),
@@ -179,7 +185,7 @@ class _PlayerScreenState extends State<PlayerScreen>
             Padding(
               padding: const EdgeInsets.only(left: 20, bottom: 8),
               child: Text(
-                'Up Next',
+                l10n.upNext,
                 style: GoogleFonts.inter(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
@@ -194,12 +200,12 @@ class _PlayerScreenState extends State<PlayerScreen>
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 itemCount: _related.length,
-                separatorBuilder: (_, _) => const SizedBox(width: 10),
+                separatorBuilder: (_, __) => const SizedBox(width: 10),
                 itemBuilder: (_, i) =>
                     RelatedCard(item: _related[i], onTap: () {}),
               ),
             ),
-            const SizedBox(height: 120),
+            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -221,15 +227,17 @@ class _PlayerScreenState extends State<PlayerScreen>
               color: AppColors.primary.withValues(alpha: 0.14),
               borderRadius: BorderRadius.circular(28),
             ),
-            child: const Icon(Icons.draw_outlined,
-                color: AppColors.primary, size: 48),
+            child: const Icon(
+              Icons.draw_outlined,
+              color: AppColors.primary,
+              size: 48,
+            ),
           ),
           Positioned(
             top: 14,
             right: 14,
             child: Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
                 color: AppColors.accentRed.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(20),
@@ -275,8 +283,11 @@ class _PlayerScreenState extends State<PlayerScreen>
                     ),
                   ],
                 ),
-                child: const Icon(Icons.play_arrow,
-                    color: Colors.white, size: 32),
+                child: const Icon(
+                  Icons.play_arrow,
+                  color: Colors.white,
+                  size: 32,
+                ),
               ),
             ),
         ],
@@ -296,8 +307,7 @@ class _PlayerScreenState extends State<PlayerScreen>
               thumbColor: AppColors.primary,
               overlayColor: AppColors.primary.withValues(alpha: 0.12),
               trackHeight: 4,
-              thumbShape:
-                  const RoundSliderThumbShape(enabledThumbRadius: 7),
+              thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 7),
             ),
             child: Slider(
               value: _progress,
@@ -309,12 +319,20 @@ class _PlayerScreenState extends State<PlayerScreen>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(_formatTime(_progress),
-                    style: GoogleFonts.inter(
-                        fontSize: 12, color: AppColors.mutedForeground)),
-                Text('45:00',
-                    style: GoogleFonts.inter(
-                        fontSize: 12, color: AppColors.mutedForeground)),
+                Text(
+                  _formatTime(_progress),
+                  style: GoogleFonts.inter(
+                    fontSize: 12,
+                    color: AppColors.mutedForeground,
+                  ),
+                ),
+                Text(
+                  '45:00',
+                  style: GoogleFonts.inter(
+                    fontSize: 12,
+                    color: AppColors.mutedForeground,
+                  ),
+                ),
               ],
             ),
           ),
@@ -359,13 +377,17 @@ class _PlayerScreenState extends State<PlayerScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _smallActionBtn(
-                _muted ? Icons.volume_off_outlined : Icons.volume_up_outlined,
+                _muted
+                    ? Icons.volume_off_outlined
+                    : Icons.volume_up_outlined,
                 () => setState(() => _muted = !_muted),
               ),
               const SizedBox(width: 12),
               Container(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 16, vertical: 8),
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.secondary,
                   borderRadius: BorderRadius.circular(20),
@@ -382,7 +404,7 @@ class _PlayerScreenState extends State<PlayerScreen>
               ),
               const SizedBox(width: 12),
               _smallActionBtn(
-                Icons.favorite_outline,
+                _liked ? Icons.favorite : Icons.favorite_outline,
                 () => setState(() => _liked = !_liked),
                 active: _liked,
               ),
@@ -424,13 +446,15 @@ class _PlayerScreenState extends State<PlayerScreen>
           Text(
             'Design Fundamentals · 24 lessons',
             style: GoogleFonts.inter(
-                fontSize: 13, color: AppColors.mutedForeground),
+              fontSize: 13,
+              color: AppColors.mutedForeground,
+            ),
           ),
           const SizedBox(height: 12),
-          Divider(color: AppColors.border),
+          const Divider(color: AppColors.border),
           const SizedBox(height: 8),
           Text(
-            "In this lesson, you'll explore the core visual principles that underpin great design — balance, contrast, alignment, and proximity. Discover how professional designers structure layouts and create hierarchy that guides the eye naturally through any composition.",
+            "In this lesson, you'll explore the core visual principles that underpin great design — balance, contrast, alignment, and proximity.",
             style: GoogleFonts.inter(
               fontSize: 14,
               color: AppColors.mutedForeground,
@@ -440,7 +464,11 @@ class _PlayerScreenState extends State<PlayerScreen>
           const SizedBox(height: 16),
           Row(
             children: [
-              _stat(Icons.people_outline, '2.4k students', AppColors.primary),
+              _stat(
+                Icons.people_outline,
+                '2.4k students',
+                AppColors.primary,
+              ),
               _vertDivider(),
               _stat(Icons.star_outline, '4.9 rating', AppColors.accentAmber),
               _vertDivider(),
@@ -459,9 +487,13 @@ class _PlayerScreenState extends State<PlayerScreen>
         children: [
           Icon(icon, size: 14, color: color),
           const SizedBox(width: 5),
-          Text(label,
-              style: GoogleFonts.inter(
-                  fontSize: 12, color: AppColors.mutedForeground)),
+          Text(
+            label,
+            style: GoogleFonts.inter(
+              fontSize: 12,
+              color: AppColors.mutedForeground,
+            ),
+          ),
         ],
       ),
     );
@@ -502,8 +534,11 @@ class _PlayerScreenState extends State<PlayerScreen>
     );
   }
 
-  Widget _smallActionBtn(IconData icon, VoidCallback onTap,
-      {bool active = false}) {
+  Widget _smallActionBtn(
+    IconData icon,
+    VoidCallback onTap, {
+    bool active = false,
+  }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -515,9 +550,11 @@ class _PlayerScreenState extends State<PlayerScreen>
               : AppColors.muted,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Icon(icon,
-            size: 18,
-            color: active ? AppColors.primary : AppColors.foreground),
+        child: Icon(
+          icon,
+          size: 18,
+          color: active ? AppColors.primary : AppColors.foreground,
+        ),
       ),
     );
   }

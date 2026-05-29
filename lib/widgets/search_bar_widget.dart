@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../theme/app_theme.dart';
+import '../core/constants/app_colors.dart';
 
-class SearchBarWidget extends StatelessWidget {
+class SearchBarWidget extends StatefulWidget {
   final TextEditingController controller;
   final String placeholder;
   final VoidCallback? onFilterTap;
@@ -15,6 +15,34 @@ class SearchBarWidget extends StatelessWidget {
     this.onFilterTap,
     this.filterActive = false,
   });
+
+  @override
+  State<SearchBarWidget> createState() => _SearchBarWidgetState();
+}
+
+class _SearchBarWidgetState extends State<SearchBarWidget> {
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(_onTextChanged);
+  }
+
+  @override
+  void didUpdateWidget(SearchBarWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller.removeListener(_onTextChanged);
+      widget.controller.addListener(_onTextChanged);
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_onTextChanged);
+    super.dispose();
+  }
+
+  void _onTextChanged() => setState(() {});
 
   @override
   Widget build(BuildContext context) {
@@ -36,42 +64,59 @@ class SearchBarWidget extends StatelessWidget {
               ],
             ),
             child: TextField(
-              controller: controller,
-              style: GoogleFonts.inter(fontSize: 15, color: AppColors.foreground),
+              controller: widget.controller,
+              style: GoogleFonts.inter(
+                fontSize: 15,
+                color: AppColors.foreground,
+              ),
               decoration: InputDecoration(
-                hintText: placeholder,
+                hintText: widget.placeholder,
                 hintStyle: GoogleFonts.inter(
-                    fontSize: 15, color: AppColors.mutedForeground),
-                prefixIcon: const Icon(Icons.search,
-                    color: AppColors.mutedForeground, size: 20),
-                suffixIcon: controller.text.isNotEmpty
+                  fontSize: 15,
+                  color: AppColors.mutedForeground,
+                ),
+                prefixIcon: const Icon(
+                  Icons.search,
+                  color: AppColors.mutedForeground,
+                  size: 20,
+                ),
+                suffixIcon: widget.controller.text.isNotEmpty
                     ? GestureDetector(
-                        onTap: () => controller.clear(),
-                        child: const Icon(Icons.close,
-                            color: AppColors.mutedForeground, size: 18),
+                        onTap: () => widget.controller.clear(),
+                        child: const Icon(
+                          Icons.close,
+                          color: AppColors.mutedForeground,
+                          size: 18,
+                        ),
                       )
                     : null,
                 border: InputBorder.none,
                 enabledBorder: InputBorder.none,
                 focusedBorder: InputBorder.none,
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 14,
+                ),
               ),
             ),
           ),
         ),
-        if (onFilterTap != null) ...[
+        if (widget.onFilterTap != null) ...[
           const SizedBox(width: 10),
           GestureDetector(
-            onTap: onFilterTap,
-            child: Container(
+            onTap: widget.onFilterTap,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: filterActive ? AppColors.primary : AppColors.card,
+                color:
+                    widget.filterActive ? AppColors.primary : AppColors.card,
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(
-                  color: filterActive ? AppColors.primary : AppColors.border,
+                  color: widget.filterActive
+                      ? AppColors.primary
+                      : AppColors.border,
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -84,7 +129,9 @@ class SearchBarWidget extends StatelessWidget {
               child: Icon(
                 Icons.tune,
                 size: 20,
-                color: filterActive ? Colors.white : AppColors.foreground,
+                color: widget.filterActive
+                    ? Colors.white
+                    : AppColors.foreground,
               ),
             ),
           ),

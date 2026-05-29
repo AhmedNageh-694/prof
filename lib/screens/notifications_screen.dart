@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/notification_item.dart';
-import '../theme/app_theme.dart';
+import '../core/constants/app_colors.dart';
 import '../widgets/notification_card.dart';
+import '../localization/app_localizations.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -21,7 +22,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       NotificationModel(
         id: 'n1',
         title: 'New Course Available',
-        preview: 'Advanced UX Research has just been published. Start learning now.',
+        preview:
+            'Advanced UX Research has just been published. Start learning now.',
         timestamp: '2m ago',
         icon: Icons.menu_book_outlined,
         iconColor: AppColors.accentTeal,
@@ -39,7 +41,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       NotificationModel(
         id: 'n3',
         title: 'Achievement Unlocked',
-        preview: "You've completed 10 lessons in a row. Keep up the great work!",
+        preview:
+            "You've completed 10 lessons in a row. Keep up the great work!",
         timestamp: '3h ago',
         icon: Icons.emoji_events_outlined,
         iconColor: AppColors.accentPurple,
@@ -48,7 +51,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       NotificationModel(
         id: 'n4',
         title: 'New Comment',
-        preview: 'Sarah commented on your project: "Love the color palette you chose!"',
+        preview:
+            'Sarah commented on your project: "Love the color palette you chose!"',
         timestamp: '5h ago',
         icon: Icons.chat_bubble_outline,
         iconColor: AppColors.accentBlue,
@@ -57,7 +61,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       NotificationModel(
         id: 'n5',
         title: 'Weekly Digest',
-        preview: "You've made progress on 4 modules this week. View your weekly summary.",
+        preview:
+            "You've made progress on 4 modules this week. View your weekly summary.",
         timestamp: '1d ago',
         icon: Icons.bar_chart_outlined,
         iconColor: AppColors.accentGreen,
@@ -75,7 +80,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       NotificationModel(
         id: 'n7',
         title: 'Module Certificate',
-        preview: 'Congratulations! Your Web Development certificate is ready to download.',
+        preview:
+            'Congratulations! Your Web Development certificate is ready to download.',
         timestamp: '3d ago',
         icon: Icons.workspace_premium_outlined,
         iconColor: AppColors.accentOrange,
@@ -103,6 +109,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final topPad = MediaQuery.of(context).padding.top;
     final unread = _notifications.where((n) => !n.isRead).toList();
     final read = _notifications.where((n) => n.isRead).toList();
@@ -125,7 +132,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   Row(
                     children: [
                       Text(
-                        'Notifications',
+                        l10n.notifications,
                         style: GoogleFonts.inter(
                           fontSize: 26,
                           fontWeight: FontWeight.w700,
@@ -137,7 +144,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         const SizedBox(width: 10),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 2),
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.primary,
                             borderRadius: BorderRadius.circular(12),
@@ -158,7 +167,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                           onTap: _markAllRead,
                           child: Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 14, vertical: 8),
+                              horizontal: 14,
+                              vertical: 8,
+                            ),
                             decoration: BoxDecoration(
                               color: AppColors.secondary,
                               borderRadius: BorderRadius.circular(20),
@@ -166,11 +177,14 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                             ),
                             child: Row(
                               children: [
-                                const Icon(Icons.check_circle_outline,
-                                    size: 14, color: AppColors.primary),
+                                const Icon(
+                                  Icons.check_circle_outline,
+                                  size: 14,
+                                  color: AppColors.primary,
+                                ),
                                 const SizedBox(width: 6),
                                 Text(
-                                  'Mark all read',
+                                  l10n.markAllRead,
                                   style: GoogleFonts.inter(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w500,
@@ -184,33 +198,41 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                     ],
                   ),
                   const SizedBox(height: 1),
-                  Divider(color: AppColors.border),
+                  const Divider(color: AppColors.border),
                 ],
               ),
             ),
           ),
           SliverPadding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 120),
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
                 if (unread.isNotEmpty) ...[
-                  _sectionLabel('New'),
+                  _sectionLabel(l10n.sectionNew),
                   const SizedBox(height: 10),
-                  ...unread.map((n) => Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: NotificationCard(
-                            notification: n, onTap: () => _markRead(n.id)),
-                      )),
+                  ...unread.map(
+                    (n) => Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: NotificationCard(
+                        notification: n,
+                        onTap: () => _markRead(n.id),
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 12),
                 ],
                 if (read.isNotEmpty) ...[
-                  _sectionLabel('Earlier'),
+                  _sectionLabel(l10n.sectionEarlier),
                   const SizedBox(height: 10),
-                  ...read.map((n) => Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: NotificationCard(
-                            notification: n, onTap: () => _markRead(n.id)),
-                      )),
+                  ...read.map(
+                    (n) => Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: NotificationCard(
+                        notification: n,
+                        onTap: () => _markRead(n.id),
+                      ),
+                    ),
+                  ),
                 ],
                 if (_notifications.isEmpty)
                   Center(
@@ -225,20 +247,29 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               color: AppColors.muted,
                               borderRadius: BorderRadius.circular(24),
                             ),
-                            child: const Icon(Icons.notifications_off_outlined,
-                                size: 32, color: AppColors.mutedForeground),
+                            child: const Icon(
+                              Icons.notifications_off_outlined,
+                              size: 32,
+                              color: AppColors.mutedForeground,
+                            ),
                           ),
                           const SizedBox(height: 12),
-                          Text('All caught up',
-                              style: GoogleFonts.inter(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.foreground)),
+                          Text(
+                            l10n.allCaughtUp,
+                            style: GoogleFonts.inter(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.foreground,
+                            ),
+                          ),
                           const SizedBox(height: 4),
-                          Text('No new notifications',
-                              style: GoogleFonts.inter(
-                                  fontSize: 14,
-                                  color: AppColors.mutedForeground)),
+                          Text(
+                            l10n.noNewNotifications,
+                            style: GoogleFonts.inter(
+                              fontSize: 14,
+                              color: AppColors.mutedForeground,
+                            ),
+                          ),
                         ],
                       ),
                     ),

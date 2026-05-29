@@ -76,7 +76,10 @@ class _SignUpFormState extends State<_SignUpForm> {
           context.go('/home');
         } else if (state is AuthFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message), backgroundColor: theme.colorScheme.error),
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: theme.colorScheme.error,
+            ),
           );
         }
       },
@@ -99,7 +102,8 @@ class _SignUpFormState extends State<_SignUpForm> {
                 keyboardType: TextInputType.emailAddress,
                 validator: (val) {
                   if (val == null || val.isEmpty) return l10n.emptyFieldError;
-                  if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(val)) {
+                  if (!RegExp(r'^[\w\-.]+@([\w-]+\.)+[\w-]{2,4}$')
+                      .hasMatch(val)) {
                     return l10n.invalidEmailError;
                   }
                   return null;
@@ -123,7 +127,9 @@ class _SignUpFormState extends State<_SignUpForm> {
                 controller: _confirmPasswordController,
                 validator: (val) {
                   if (val == null || val.isEmpty) return l10n.emptyFieldError;
-                  if (val != _passwordController.text) return l10n.passwordMismatchError;
+                  if (val != _passwordController.text) {
+                    return l10n.passwordMismatchError;
+                  }
                   return null;
                 },
               ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'injection.dart';
@@ -26,16 +25,8 @@ class MyApp extends StatelessWidget {
             title: 'Prof',
             theme: AppTheme.lightTheme,
             locale: locale,
-            supportedLocales: const [
-              Locale('en'),
-              Locale('ar'),
-            ],
-            localizationsDelegates: [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
             routerConfig: AppRouter.router,
             debugShowCheckedModeBanner: false,
           );

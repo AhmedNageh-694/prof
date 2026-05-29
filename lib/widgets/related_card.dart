@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/related_content.dart';
-import '../theme/app_theme.dart';
+import '../core/constants/app_colors.dart';
 
 class RelatedCard extends StatelessWidget {
   final RelatedContent item;
@@ -31,8 +31,9 @@ class RelatedCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(14)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(14),
+              ),
               child: Container(
                 height: 88,
                 width: double.infinity,
@@ -51,8 +52,11 @@ class RelatedCard extends StatelessWidget {
                           color: item.accentColor,
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(Icons.play_arrow,
-                            color: Colors.white, size: 12),
+                        child: const Icon(
+                          Icons.play_arrow,
+                          color: Colors.white,
+                          size: 12,
+                        ),
                       ),
                     ),
                   ],
@@ -77,13 +81,18 @@ class RelatedCard extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
               child: Row(
                 children: [
-                  const Icon(Icons.access_time,
-                      size: 12, color: AppColors.mutedForeground),
+                  const Icon(
+                    Icons.access_time,
+                    size: 12,
+                    color: AppColors.mutedForeground,
+                  ),
                   const SizedBox(width: 4),
                   Text(
                     item.duration,
                     style: GoogleFonts.inter(
-                        fontSize: 11, color: AppColors.mutedForeground),
+                      fontSize: 11,
+                      color: AppColors.mutedForeground,
+                    ),
                   ),
                 ],
               ),

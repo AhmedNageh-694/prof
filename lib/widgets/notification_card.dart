@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/notification_item.dart';
-import '../theme/app_theme.dart';
+import '../core/constants/app_colors.dart';
 
 class NotificationCard extends StatelessWidget {
   final NotificationModel notification;
   final VoidCallback onTap;
 
-  const NotificationCard(
-      {super.key, required this.notification, required this.onTap});
+  const NotificationCard({
+    super.key,
+    required this.notification,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +34,11 @@ class NotificationCard extends StatelessWidget {
                 color: notification.iconColor.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(13),
               ),
-              child: Icon(notification.icon,
-                  color: notification.iconColor, size: 20),
+              child: Icon(
+                notification.icon,
+                color: notification.iconColor,
+                size: 20,
+              ),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -59,7 +65,9 @@ class NotificationCard extends StatelessWidget {
                       Text(
                         notification.timestamp,
                         style: GoogleFonts.inter(
-                            fontSize: 11, color: AppColors.mutedForeground),
+                          fontSize: 11,
+                          color: AppColors.mutedForeground,
+                        ),
                       ),
                     ],
                   ),
